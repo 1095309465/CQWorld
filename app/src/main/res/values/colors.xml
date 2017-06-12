@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#3F51B5</color>
+    <color name="colorPrimaryDark">#303F9F</color>
+    <color name="colorAccent">#FF4081</color>
+
+    <color name="white">#ffffff</color>
+    <color name="black">#000000</color>
+    <color name="color_9d88bd">#886dae</color>
+    <color name="color_f2f2f2">#f2f2f2</color>
+    <color name="color_666666">#666666</color>
+    <color name="color_999999">#999999</color>
+    <color name="color_e6e6e6">#e6e6e6</color>
+    <color name="color_dddddd">#dddddd</color>
+    <color name="color_333333">#333333</color>
+    <color name="color_ff3366">#ff3366</color>
+    <color name="color_8bcbf7">#8bcbf7</color>
+    <color name="color_ffc655">#ffc655</color>
+    <color name="color_66a064">#66a064</color>
+    <color name="color_4c9bff">#4c9bff</color>
+    <color name="color_4a4a4a">#4a4a4a</color>
+    <color name="color_9b9b9b">#9b9b9b</color>
+    <color name="btn_gray_pressed_status">#b5b5b6</color>
+    <color name="list_itease_secondary_color">#888888</color>
+    <color name="emojicon_tab_selected">#D9D9D9</color>
+    <color name="buy_count_button_lose_focus_light_grey">#aaaaaa</color>
+    <color name="buy_count_button_lose_focus_grey">#dedede</color>
+</resources>

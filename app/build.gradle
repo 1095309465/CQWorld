@@ -1,0 +1,114 @@
+apply plugin: 'com.android.application'
+def releaseTime() {
+    return new Date().format("MMddHHmm", TimeZone.getTimeZone("GMT+8"))
+}
+android {
+    compileSdkVersion 22
+    buildToolsVersion "22.0.1"
+    defaultConfig {
+        applicationId "com.cqworld"
+        minSdkVersion 16
+        targetSdkVersion 22
+        versionCode 1
+        versionName "1.0"
+        buildConfigField("boolean", "QUARTER_LIVE", "true");
+        buildConfigField("boolean", "QUARTER_TEST", "false");
+    }
+    signingConfigs {
+        release {
+            storeFile file("../cqworld.jks")
+            storePassword "cqworld_hi_123"
+            keyAlias "cqworld_alias"
+            keyPassword "cqworld_hi_123"
+        }
+    }
+
+    buildTypes {
+        debug {
+
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+//
+//            signingConfig signingConfigs.release
+        }
+
+        quarterTest {
+            buildConfigField("boolean", "QUARTER_LIVE", "false");
+            buildConfigField("boolean", "QUARTER_DEV", "false");
+            buildConfigField("boolean", "QUARTER_TEST", "true");
+
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+
+            signingConfig signingConfigs.release
+
+            applicationVariants.all { variant ->
+                variant.outputs.each { output ->
+                    def outputFile = output.outputFile
+                    if (outputFile != null && outputFile.name.endsWith('.apk')) {
+                        if (variant.buildType.name.equals('quarterTest')) {
+                            def fileName = "quarter_test_v${defaultConfig.versionName}_${releaseTime()}.apk"
+                            output.outputFile = new File(outputFile.parent, fileName)
+                        }
+                    }
+                }
+            }
+        }
+
+        quarterDev {
+            buildConfigField("boolean", "QUARTER_LIVE", "false");
+            buildConfigField("boolean", "QUARTER_DEV", "true");
+            buildConfigField("boolean", "QUARTER_TEST", "false");
+
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+
+            signingConfig signingConfigs.release
+
+            applicationVariants.all { variant ->
+                variant.outputs.each { output ->
+                    def outputFile = output.outputFile
+                    if (outputFile != null && outputFile.name.endsWith('.apk')) {
+                        if (variant.buildType.name.equals('quarterDev')) {
+                            def fileName = "quarter_dev_v${defaultConfig.versionName}_${releaseTime()}.apk"
+                            output.outputFile = new File(outputFile.parent, fileName)
+                        }
+                    }
+                }
+            }
+        }
+
+        release {
+            buildConfigField("boolean", "QUARTER_LIVE", "true");
+            buildConfigField("boolean", "QUARTER_DEV", "false");
+            buildConfigField("boolean", "QUARTER_TEST", "false");
+
+            zipAlignEnabled true
+
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+
+            signingConfig signingConfigs.release
+
+            applicationVariants.all { variant ->
+                variant.outputs.each { output ->
+                    def outputFile = output.outputFile
+                    if (outputFile != null && outputFile.name.endsWith('.apk')) {
+                        if (variant.buildType.name.equals('release')) {
+                            def fileName = "quarter_live_v${defaultConfig.versionName}_${releaseTime()}.apk"
+                            output.outputFile = new File(outputFile.parent, fileName)
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+dependencies {
+    compile fileTree(include: ['*.jar'], dir: 'libs')
+    testCompile 'junit:junit:4.12'
+    compile 'com.android.support:appcompat-v7:22.2.1'
+    compile 'com.android.support:recyclerview-v7:22.2.1'
+    compile 'com.android.support:cardview-v7:22.2.1'
+}
